@@ -23,115 +23,118 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.apiomat.nativemodule.tankstellenfinder;
-import com.apiomat.nativemodule.*;
-import com.apiomat.nativemodule.basics.User;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
-* Generated class for hooks on your Tankstelle data model
-*/
+ * Generated class for hooks on your Tankstelle data model
+ */
 
-public class TankstelleHooksTransient<T extends com.apiomat.nativemodule.tankstellenfinder.Tankstelle> implements com.apiomat.nativemodule.IModelHooksTransient<com.apiomat.nativemodule.tankstellenfinder.Tankstelle>
+public class TankstelleHooksTransient<T extends com.apiomat.nativemodule.tankstellenfinder.Tankstelle>
+	implements com.apiomat.nativemodule.IModelHooksTransient<com.apiomat.nativemodule.tankstellenfinder.Tankstelle>
 {
-    protected com.apiomat.nativemodule.tankstellenfinder.Tankstelle model;
+	protected com.apiomat.nativemodule.tankstellenfinder.Tankstelle model;
 
-    @Override
-    public void setCallingModel( com.apiomat.nativemodule.tankstellenfinder.Tankstelle model )
-    {
-        this.model = model;
-    }
+	@Override
+	public void setCallingModel( com.apiomat.nativemodule.tankstellenfinder.Tankstelle model )
+	{
+		this.model = model;
+	}
 
+	/* do-Methods can be used if your data model is set to TRANSIENT */
 
-    /*
-     * do-Methods can be used if your data model is set to TRANSIENT
-     */
+	@Override
+	public String doPost( com.apiomat.nativemodule.tankstellenfinder.Tankstelle obj,
+		com.apiomat.nativemodule.Request r )
+	{
+		return null;
+	}
 
-    @Override
-    public String doPost( com.apiomat.nativemodule.tankstellenfinder.Tankstelle obj, com.apiomat.nativemodule.Request r )
-    {
-        return null;
-    }
+	@Override
+	public com.apiomat.nativemodule.tankstellenfinder.Tankstelle doGet( String foreignId,
+		com.apiomat.nativemodule.Request r )
+	{
+		return null;
+	}
 
-    @Override
-    public com.apiomat.nativemodule.tankstellenfinder.Tankstelle doGet( String foreignId, com.apiomat.nativemodule.Request r )
-    {
-        return null;
-    }
+	@Override
+	public java.util.List<com.apiomat.nativemodule.tankstellenfinder.Tankstelle> doGetAll( String query,
+		com.apiomat.nativemodule.Request r )
+	{
+		List<Tankstelle> tankstellen = new ArrayList<Tankstelle>( );
+		Tankstelle tankstelle = new Tankstelle( );
+		/* Erzeugung als non-transient */
+		//    	Tankstelle tankstelle = (Tankstelle) TankstellenFinder.AOM.createObject( r.getApplicationName( ), Tankstelle.MODULE_NAME, Tankstelle.MODEL_NAME, r );
+		tankstelle.setName( "Testtankstelle" );
+		tankstelle.setPrice( 9.99 );
+		tankstellen.add( tankstelle );
+		return tankstellen;
+	}
 
-    @Override
-    public java.util.List<com.apiomat.nativemodule.tankstellenfinder.Tankstelle> doGetAll( String query, com.apiomat.nativemodule.Request r )
-    {
-        return null;
-    }
+	@Override
+	public long doCountAll( String query, com.apiomat.nativemodule.Request r )
+	{
+		return 0;
+	}
 
-    @Override
-    public long doCountAll( String query, com.apiomat.nativemodule.Request r )
-    {
-        return 0;
-    }
+	@Override
+	public void doPut( com.apiomat.nativemodule.tankstellenfinder.Tankstelle obj, com.apiomat.nativemodule.Request r )
+	{}
 
-    @Override
-    public void doPut( com.apiomat.nativemodule.tankstellenfinder.Tankstelle obj, com.apiomat.nativemodule.Request r )
-    {
-    }
+	@Override
+	public boolean doDelete( String foreignId, com.apiomat.nativemodule.Request r )
+	{
+		return false;
+	}
 
-    @Override
-    public boolean doDelete( String foreignId, com.apiomat.nativemodule.Request r )
-    {
-        return false;
-    }
+	@Override
+	public boolean doDeleteAll( String query, com.apiomat.nativemodule.Request r )
+	{
+		return false;
+	}
 
-    @Override
-    public boolean doDeleteAll( String query, com.apiomat.nativemodule.Request r )
-    {
-        return false;
-    }
+	@Override
+	public String doPostData( final String attributeName, final com.apiomat.nativemodule.DataWrapper dataWrapper,
+		final com.apiomat.nativemodule.Request r )
+	{
+		return null;
+	}
 
-    @Override
-    public String doPostData( final String attributeName, final com.apiomat.nativemodule.DataWrapper dataWrapper, final com.apiomat.nativemodule.Request r )
-    {
-        return null;
-    }
+	@Override
+	public com.apiomat.nativemodule.DataWrapper doGetData( final String dataId, final String attributeName,
+		final com.apiomat.nativemodule.TranscodingConfiguration transcodingConfig,
+		final com.apiomat.nativemodule.Request r )
+	{
+		return null;
+	}
 
-    @Override
-    public com.apiomat.nativemodule.DataWrapper doGetData( final String dataId, final String attributeName, final com.apiomat.nativemodule.TranscodingConfiguration transcodingConfig, final com.apiomat.nativemodule.Request r )
-    {
-        return null;
-    }
+	@Override
+	public boolean doDeleteData( final String attributeName, final String dataId,
+		final com.apiomat.nativemodule.Request r )
+	{
+		return false;
+	}
 
-    @Override
-    public boolean doDeleteData( final String attributeName, final String dataId, final com.apiomat.nativemodule.Request r )
-    {
-        return false;
-    }
+	/* Please note: Before doPostRef gets called, doGet gets called internally,
+	 * so that this.model can be populated with attribute values. */
+	@Override
+	public void doPostRef( Object referencedObject, String referenceName, com.apiomat.nativemodule.Request r )
+	{}
 
-    /*
-     * Please note: Before doPostRef gets called, doGet gets called internally,
-     * so that this.model can be populated with attribute values.
-     */
-    @Override
-    public void doPostRef( Object referencedObject, String referenceName, com.apiomat.nativemodule.Request r )
-    {
-    }
+	/* Please note: Before doGetRef gets called, doGet gets called internally,
+	 * so that this.model can be populated with attribute values. */
+	@Override
+	public <Z extends com.apiomat.nativemodule.AbstractClientDataModel> java.util.List<Z> doGetRef( String refName,
+		String query, com.apiomat.nativemodule.Request r )
+	{
+		return null;
+	}
 
-    /*
-     * Please note: Before doGetRef gets called, doGet gets called internally,
-     * so that this.model can be populated with attribute values.
-     */
-    @Override
-    public <Z extends com.apiomat.nativemodule.AbstractClientDataModel> java.util.List<Z> doGetRef( String refName, String query, com.apiomat.nativemodule.Request r )
-    {
-        return null;
-    }
-
-    /*
-     * Please note: Before doDeleteRef gets called, doGet gets called internally,
-     * so that this.model can be populated with attribute values.
-     */
-    @Override
-    public void doDeleteRef( String refName, String refForeignId, com.apiomat.nativemodule.Request r )
-    {
-    }
-
+	/* Please note: Before doDeleteRef gets called, doGet gets called internally,
+	 * so that this.model can be populated with attribute values. */
+	@Override
+	public void doDeleteRef( String refName, String refForeignId, com.apiomat.nativemodule.Request r )
+	{}
 
 }
