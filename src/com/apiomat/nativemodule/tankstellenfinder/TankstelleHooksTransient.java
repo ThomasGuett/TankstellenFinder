@@ -24,8 +24,13 @@
  */
 package com.apiomat.nativemodule.tankstellenfinder;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.apiomat.nativemodule.Level;
 
 /**
  * Generated class for hooks on your Tankstelle data model
@@ -63,12 +68,32 @@ public class TankstelleHooksTransient<T extends com.apiomat.nativemodule.tankste
 		com.apiomat.nativemodule.Request r )
 	{
 		List<Tankstelle> tankstellen = new ArrayList<Tankstelle>( );
-		Tankstelle tankstelle = new Tankstelle( );
-		/* Erzeugung als non-transient */
-		//    	Tankstelle tankstelle = (Tankstelle) TankstellenFinder.AOM.createObject( r.getApplicationName( ), Tankstelle.MODULE_NAME, Tankstelle.MODEL_NAME, r );
-		tankstelle.setName( "Testtankstelle" );
-		tankstelle.setPrice( 9.99 );
-		tankstellen.add( tankstelle );
+		try
+		{
+			final URL apiUrl = new URL(
+				"https://creativecommons.tankerkoenig.de/json/list.php?lat=52.521&lng=13.438&rad=1.5&sort=dist&type=all&apikey=00000000-0000-0000-0000-000000000002" );
+			InputStream in = apiUrl.openStream( );
+			ByteArrayOutputStream out = new ByteArrayOutputStream( );
+			byte[ ] buffer = new byte[ 4096 ];
+			int n;
+			while ( ( n = in.read( buffer ) ) > 0 )
+			{
+				out.write( buffer, 0, n );
+			}
+			in.close( );
+			out.close( );
+			String stringResponse = out.toString( );
+			this.model.log( Level.TRACE, stringResponse );
+			Tankstelle tankstelle = new Tankstelle( );
+			/* Erzeugung als non-transient */
+			//    	Tankstelle tankstelle = (Tankstelle) TankstellenFinder.AOM.createObject( r.getApplicationName( ), Tankstelle.MODULE_NAME, Tankstelle.MODEL_NAME, r );
+			tankstellen.add( tankstelle );
+		}
+		catch ( Exception e )
+		{
+			this.model.throwException( e.getMessage( ) );
+			//			TankstellenFinder.AOM.throwException( r.getApplicationName( ), e.getMessage( ) );
+		}
 		return tankstellen;
 	}
 
