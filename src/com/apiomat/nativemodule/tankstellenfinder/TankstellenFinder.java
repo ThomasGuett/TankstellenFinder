@@ -24,123 +24,134 @@
  */
 package com.apiomat.nativemodule.tankstellenfinder;
 
+import com.apiomat.nativemodule.NativeModuleConfig.Type;
 
 /**
- * Generated class for starting and stopping your module. 
+ * Generated class for starting and stopping your module.
  * 
- * Please be aware that all overridden methods in this class are called internally with 
- * A NEW INSTANCE OF THIS CLASS every time. That is, you cannot use instance variables 
+ * Please be aware that all overridden methods in this class are called internally with
+ * A NEW INSTANCE OF THIS CLASS every time. That is, you cannot use instance variables
  * in these overridden methods, because they are initialized again before each call.
  * 
  */
-@com.apiomat.nativemodule.Module( description="", 
-         usedModules = { }, securityPermissions = {} )
+@com.apiomat.nativemodule.Module( description = "",
+	usedModules = { }, securityPermissions = { } )
 public class TankstellenFinder implements com.apiomat.nativemodule.IModule
 {
-    static com.apiomat.nativemodule.IApplicationConfigProxy APP_CONFIG_PROXY;
-    static com.apiomat.nativemodule.IStaticMethods AOM;
-    
-    // Sample for a module configuration
-    //
-    // @com.apiomat.nativemodule.NativeModuleConfig(
-    //     datatype = Type.TEXT,
-    //     example = "localhost",
-    //     title = "Server Hostname",
-    //     info = "Hostname of the server",
-    //     defaultValue = "localhost",
-    //     notifyAllNodes = true,
-    //     order = 1 )
-    // public static String HOSTNAME = "TankstellenFinder_hostname";
-    //
-    // Read @NativeModuleConfig values using the following code:
-    // TankstellenFinder.APP_CONFIG_PROXY.getConfigValue( TankstellenFinder.HOSTNAME, appName, system );
+	static com.apiomat.nativemodule.IApplicationConfigProxy APP_CONFIG_PROXY;
+	static com.apiomat.nativemodule.IStaticMethods AOM;
 
-    /**
-     * This method gets called once in the cluster when the module is uploaded.
-     */
-    @Override
-    public void onDeploy( )
-    {
-        //TODO will be called on SDK upload or service start
-    }
+	// Sample for a module configuration
+	//
+	// @com.apiomat.nativemodule.NativeModuleConfig(
+	//     datatype = Type.TEXT,
+	//     example = "localhost",
+	//     title = "Server Hostname",
+	//     info = "Hostname of the server",
+	//     defaultValue = "localhost",
+	//     notifyAllNodes = true,
+	//     order = 1 )
+	// public static String HOSTNAME = "TankstellenFinder_hostname";
+	//
+	// Read @NativeModuleConfig values using the following code:
+	// TankstellenFinder.APP_CONFIG_PROXY.getConfigValue( TankstellenFinder.HOSTNAME, appName, system );
 
-    /**
-     * This method gets called once in the cluster when the ApiOmat service is shutdown.
-     */
-    @Override
-    public void onUndeploy( )
-    {
-        //TODO will be called when service shuts down (maintenance)
-    }
-    
-    /**
-     * This method gets called when the configuration for an app changes for this module
-     */
-    @Override
-    public void onConfigChanged( String appName, String configKey, String system )
-    {
-        // TODO Auto-generated method stub
-    }
-    
-    /**
-     * This method may provide an implementation for your own REST interface
-     */
-    @Override
-    public com.apiomat.nativemodule.AbstractRestResource getSpecificRestResource( javax.ws.rs.core.UriInfo uriInfo, 
-    	javax.servlet.http.HttpServletRequest servletRequest, javax.ws.rs.core.SecurityContext securityContext, 
-    	javax.ws.rs.core.Request wsRequest )
-    {
-        // TODO comment in to use a basic rest endpoint with a ping method
-        //return new RestClass( uriInfo, servletRequest, securityContext, wsRequest );
-        return null;
-    }
-    
-    /**
-     * This method gets called every hour
-     */
-    @Override
-    public void onCronHourly( final String appName, final String system )
-    {
-        // TODO Auto-generated method stub
-    }
+	@com.apiomat.nativemodule.NativeModuleConfig(
+		datatype = Type.TEXT,
+		example = "abc123...",
+		title = "API Key",
+		info = "api key von der Tankstellen API",
+		defaultValue = "00000000-0000-0000-0000-000000000002",
+		notifyAllNodes = true,
+		order = 1 )
+	public static String TANKKOENIG_API_KEY = "TankstellenFinder_tankKoenigApiKey";
 
-    /**
-     * This method gets called every day
-     */
-    @Override
-    public void onCronDaily( final String appName, final String system )
-    {
-        // TODO Auto-generated method stub
-    }
-
-    /**
-     * This method gets called every week
-     */
-    @Override
-    public void onCronWeekly( final String appName, final String system )
-    {
-        // TODO Auto-generated method stub
-    }
-
-    /**
-     * This method gets called every month
-     */
-    @Override
-    public void onCronMonthly( final String appName, final String system )
-    {
-        // TODO Auto-generated method stub
-    }
-    
-    /**
-     * This method can be used for health checks (http://<hostname>/yambas/rest/modules/<modulename>/<appname>/health)
-     * <p>
-     *  -1 means health check not implemented<br>
-	 *  0 means "OK"<br>
-	 *  every other code signalizes a custom error
+	/**
+	 * This method gets called once in the cluster when the module is uploaded.
 	 */
-    @Override
-    public int checkHealth( final String appName, final String system )
-    {
-        return -1;
-    }
+	@Override
+	public void onDeploy( )
+	{
+		//TODO will be called on SDK upload or service start
+	}
+
+	/**
+	 * This method gets called once in the cluster when the ApiOmat service is shutdown.
+	 */
+	@Override
+	public void onUndeploy( )
+	{
+		//TODO will be called when service shuts down (maintenance)
+	}
+
+	/**
+	 * This method gets called when the configuration for an app changes for this module
+	 */
+	@Override
+	public void onConfigChanged( String appName, String configKey, String system )
+	{
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * This method may provide an implementation for your own REST interface
+	 */
+	@Override
+	public com.apiomat.nativemodule.AbstractRestResource getSpecificRestResource( javax.ws.rs.core.UriInfo uriInfo,
+		javax.servlet.http.HttpServletRequest servletRequest, javax.ws.rs.core.SecurityContext securityContext,
+		javax.ws.rs.core.Request wsRequest )
+	{
+		// TODO comment in to use a basic rest endpoint with a ping method
+		//return new RestClass( uriInfo, servletRequest, securityContext, wsRequest );
+		return null;
+	}
+
+	/**
+	 * This method gets called every hour
+	 */
+	@Override
+	public void onCronHourly( final String appName, final String system )
+	{
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * This method gets called every day
+	 */
+	@Override
+	public void onCronDaily( final String appName, final String system )
+	{
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * This method gets called every week
+	 */
+	@Override
+	public void onCronWeekly( final String appName, final String system )
+	{
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * This method gets called every month
+	 */
+	@Override
+	public void onCronMonthly( final String appName, final String system )
+	{
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * This method can be used for health checks (http://<hostname>/yambas/rest/modules/<modulename>/<appname>/health)
+	 * <p>
+	 * -1 means health check not implemented<br>
+	 * 0 means "OK"<br>
+	 * every other code signalizes a custom error
+	 */
+	@Override
+	public int checkHealth( final String appName, final String system )
+	{
+		return -1;
+	}
 }

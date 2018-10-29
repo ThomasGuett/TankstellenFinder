@@ -71,8 +71,12 @@ public class TankstelleHooksTransient<T extends com.apiomat.nativemodule.tankste
 		List<Tankstelle> tankstellen = new ArrayList<Tankstelle>( );
 		try
 		{
+			String apiKey = ( String ) TankstellenFinder.APP_CONFIG_PROXY
+				.getConfigValue( TankstellenFinder.TANKKOENIG_API_KEY, r.getApplicationName( ), r.getSystem( ) );
+
 			final URL apiUrl = new URL(
-				"https://creativecommons.tankerkoenig.de/json/list.php?lat=52.521&lng=13.438&rad=1.5&sort=dist&type=all&apikey=00000000-0000-0000-0000-000000000002" );
+				"https://creativecommons.tankerkoenig.de/json/list.php?lat=52.521&lng=13.438&rad=1.5&sort=dist&type=all&apikey=" +
+					apiKey );
 			InputStream in = apiUrl.openStream( );
 			ByteArrayOutputStream out = new ByteArrayOutputStream( );
 			byte[ ] buffer = new byte[ 4096 ];
@@ -90,7 +94,11 @@ public class TankstelleHooksTransient<T extends com.apiomat.nativemodule.tankste
 				JSONObject jsonStation = jsonStations.getJSONObject( i );
 				Tankstelle tankstelle = new Tankstelle( );
 				tankstelle.setName( jsonStation.optString( "name" ) );
-				tankstelle.setPrice( jsonStation.optDouble( "e5" ) );
+				tankstelle.setE5( jsonStation.optDouble( "e5" ) );
+				tankstelle.setE10( jsonStation.optDouble( "e10" ) );
+				tankstelle.setDiesel( jsonStation.optDouble( "diesel" ) );
+				tankstelle.setLocationLatitude( jsonStation.optDouble( "lat" ) );
+				tankstelle.setLocationLongitude( jsonStation.optDouble( "lng" ) );
 				tankstellen.add( tankstelle );
 			}
 			/* Erzeugung als non-transient */
