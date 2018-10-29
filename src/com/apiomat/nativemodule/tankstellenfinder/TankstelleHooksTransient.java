@@ -73,10 +73,11 @@ public class TankstelleHooksTransient<T extends com.apiomat.nativemodule.tankste
 		{
 			String apiKey = ( String ) TankstellenFinder.APP_CONFIG_PROXY
 				.getConfigValue( TankstellenFinder.TANKKOENIG_API_KEY, r.getApplicationName( ), r.getSystem( ) );
-
-			final URL apiUrl = new URL(
+			String strApiUrl =
 				"https://creativecommons.tankerkoenig.de/json/list.php?lat=52.521&lng=13.438&rad=1.5&sort=dist&type=all&apikey=" +
-					apiKey );
+					apiKey;
+			this.model.log( strApiUrl );
+			final URL apiUrl = new URL( strApiUrl );
 			InputStream in = apiUrl.openStream( );
 			ByteArrayOutputStream out = new ByteArrayOutputStream( );
 			byte[ ] buffer = new byte[ 4096 ];
