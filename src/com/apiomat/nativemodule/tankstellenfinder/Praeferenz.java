@@ -26,9 +26,8 @@ package com.apiomat.nativemodule.tankstellenfinder;
 
 
 import com.apiomat.nativemodule.basics.*;
-import com.apiomat.nativemodule.tankstellenfinder.*;
 /**
-* Generated default class representing a user in your app
+* Generated class for your Praeferenz data model
 *
 * DO NOT CHANGE ANY CODE EXCEPT CLASS ANNOTATIONS OR CLASS ATTRIBUTES HERE!
 * EVERYTHING ELSE WILL GET OVERWRITTEN!
@@ -36,13 +35,13 @@ import com.apiomat.nativemodule.tankstellenfinder.*;
 */
 @java.lang.SuppressWarnings( "unused" )
 @com.apiomat.nativemodule.Model( moduleName = "TankstellenFinder",
-    hooksClassNameTransient = "com.apiomat.nativemodule.tankstellenfinder.TankUserHooksTransient", 
-    hooksClassNameNonTransient = "com.apiomat.nativemodule.tankstellenfinder.TankUserHooksNonTransient", 
-    isTransient = false,     requiredUserRoleCreate=com.apiomat.nativemodule.UserRole.Guest, requiredUserRoleRead=com.apiomat.nativemodule.UserRole.User,
+    hooksClassNameTransient = "com.apiomat.nativemodule.tankstellenfinder.PraeferenzHooksTransient", 
+    hooksClassNameNonTransient = "com.apiomat.nativemodule.tankstellenfinder.PraeferenzHooksNonTransient", 
+    isTransient = false,     requiredUserRoleCreate=com.apiomat.nativemodule.UserRole.User, requiredUserRoleRead=com.apiomat.nativemodule.UserRole.User,
     requiredUserRoleWrite=com.apiomat.nativemodule.UserRole.Owner, restrictResourceAccess=false,    allowedRolesCreate={}, allowedRolesRead={},
     allowedRolesWrite={}, allowedRolesGrant={}, 
     roleClassesMap={})
-public class TankUser extends com.apiomat.nativemodule.basics.User
+public class Praeferenz extends com.apiomat.nativemodule.AbstractClientDataModel<com.apiomat.nativemodule.tankstellenfinder.Praeferenz> implements com.apiomat.nativemodule.IModel<com.apiomat.nativemodule.tankstellenfinder.Praeferenz>
 {
     /**
      * Contains the name of the module that this model belongs to
@@ -51,16 +50,15 @@ public class TankUser extends com.apiomat.nativemodule.basics.User
     /**
      * Contains the name of the model
      */
-    public static final String MODEL_NAME = "TankUser";
+    public static final String MODEL_NAME = "Praeferenz";
 
     /** class specific attributes */
-    private java.util.List<com.apiomat.nativemodule.tankstellenfinder.Praeferenz> praeferenzen = new java.util.ArrayList<com.apiomat.nativemodule.tankstellenfinder.Praeferenz>();
+    private double[] location;
     private Double radius = null;
-    private String sorte = null;
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
-    public TankUser ()
+    public Praeferenz ()
     {}
 
     /**
@@ -81,34 +79,48 @@ public class TankUser extends com.apiomat.nativemodule.basics.User
         return MODEL_NAME;
     }
 
-    public java.util.List<com.apiomat.nativemodule.tankstellenfinder.Praeferenz> getPraeferenzen() 
+    public double getLocationLatitude( )
     {
-        if(this.praeferenzen == null || this.praeferenzen.size() == 0)
+         return this.location !=null && this.location.length > 0 ? this.location[0] : 0;
+    }
+
+    public double getLocationLongitude( )
+    {
+         return this.location !=null && this.location.length > 1 ? this.location[1] : 0;
+    }
+
+    public void setLocationLatitude( double latitude )
+    {
+        if( this.location == null )
         {
-            /* do this by reflection to be backward compatible */
-            try
-            {
-                java.lang.reflect.Method m = com.apiomat.nativemodule.AbstractClientDataModel.class.getMethod( "loadReferences", String.class,  Class.class );
-                this.praeferenzen =  ( java.util.List<com.apiomat.nativemodule.tankstellenfinder.Praeferenz> ) m.invoke( this, "praeferenzen", com.apiomat.nativemodule.tankstellenfinder.Praeferenz.class );
-            }
-            catch ( java.lang.NoSuchMethodException | java.lang.SecurityException | java.lang.IllegalAccessException | java.lang.IllegalArgumentException | java.lang.reflect.InvocationTargetException e )
-            {
-                //silently ignored
-            }
-        }   
-        return this.praeferenzen;
+            this.location = new double[]{};
+        }
+
+        if ( this.location.length < 2 )
+        {
+            this.location = new double[]{ latitude, 0 };
+        }
+        else
+        {
+            this.location[0] = latitude;
+        }
     }
 
-    public void postPraeferenzen( final com.apiomat.nativemodule.tankstellenfinder.Praeferenz refData )
+    public void setLocationLongitude( double longitude )
     {
-        addReference( "praeferenzen", refData );
-        this.praeferenzen.add( refData );
-    }
+        if( this.location == null )
+        {
+            this.location = new double[]{};
+        }
 
-    public void removePraeferenzen( final com.apiomat.nativemodule.tankstellenfinder.Praeferenz refData )
-    {
-        removeReference( "praeferenzen", refData );
-        this.praeferenzen.remove( refData );
+        if ( this.location.length < 2 )
+        {
+            this.location = new double[]{ 0, longitude };
+        }
+        else
+        {
+            this.location[1] = longitude;
+        }
     }
 
     public Double getRadius()
@@ -119,16 +131,6 @@ public class TankUser extends com.apiomat.nativemodule.basics.User
     public void setRadius( Double arg )
     {
         this.radius = arg;
-    }
-
-    public String getSorte()
-    {
-         return this.sorte;
-    }
-
-    public void setSorte( String arg )
-    {
-        this.sorte = arg;
     }
 
 }
