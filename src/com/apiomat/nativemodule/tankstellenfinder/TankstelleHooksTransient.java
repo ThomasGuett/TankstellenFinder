@@ -30,7 +30,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.apiomat.nativemodule.Level;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Generated class for hooks on your Tankstelle data model
@@ -82,12 +83,18 @@ public class TankstelleHooksTransient<T extends com.apiomat.nativemodule.tankste
 			}
 			in.close( );
 			out.close( );
-			String stringResponse = out.toString( );
-			this.model.log( Level.TRACE, stringResponse );
-			Tankstelle tankstelle = new Tankstelle( );
+			JSONObject jsonResponse = new JSONObject( out.toString( ) );
+			JSONArray jsonStations = jsonResponse.optJSONArray( "stations" );
+			for ( int i = 0; i < jsonStations.length( ); i++ )
+			{
+				JSONObject jsonStation = jsonStations.getJSONObject( i );
+				Tankstelle tankstelle = new Tankstelle( );
+				tankstelle.setName( jsonStation.optString( "name" ) );
+				tankstelle.setPrice( jsonStation.optDouble( "e5" ) );
+				tankstellen.add( tankstelle );
+			}
 			/* Erzeugung als non-transient */
 			//    	Tankstelle tankstelle = (Tankstelle) TankstellenFinder.AOM.createObject( r.getApplicationName( ), Tankstelle.MODULE_NAME, Tankstelle.MODEL_NAME, r );
-			tankstellen.add( tankstelle );
 		}
 		catch ( Exception e )
 		{
