@@ -37,8 +37,7 @@
     </properties>
     
     <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.json/json -->
-		<dependency>
+        <dependency>
     		<groupId>org.json</groupId>
     		<artifactId>json</artifactId>
     		<version>20180813</version>
@@ -62,6 +61,13 @@
             <version>1.19</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/jersey-core-1.19.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/json-20180813.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>jsr311-api</groupId>
