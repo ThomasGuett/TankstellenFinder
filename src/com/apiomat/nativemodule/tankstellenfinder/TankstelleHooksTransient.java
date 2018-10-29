@@ -68,47 +68,65 @@ public class TankstelleHooksTransient<T extends com.apiomat.nativemodule.tankste
 	public java.util.List<com.apiomat.nativemodule.tankstellenfinder.Tankstelle> doGetAll( String query,
 		com.apiomat.nativemodule.Request r )
 	{
+		/* search for requesting user */
+		String userName = r.getUserEmail( );
+		String userQuery = String.format( "userName==\"%s\"", userName );
+		//		List<TankUser> foundTankUsers = this.model.findByNames( TankUser.class, userQuery, r );
+		//		if(null != foundTankUsers && foundTankUsers.size( ) > 0)
+		//		{
+		//			TankUser user = foundTankUsers.get( 0 );
+		//		}
+
+		TankUser user = this.model.findByNames( TankUser.class, userQuery, r ).stream( ).findFirst( ).orElse( null );
 		List<Tankstelle> tankstellen = new ArrayList<Tankstelle>( );
-		try
+		if ( null != user )
 		{
-			String apiKey = ( String ) TankstellenFinder.APP_CONFIG_PROXY
-				.getConfigValue( TankstellenFinder.TANKKOENIG_API_KEY, r.getApplicationName( ), r.getSystem( ) );
-			String strApiUrl =
-				"https://creativecommons.tankerkoenig.de/json/list.php?lat=52.521&lng=13.438&rad=1.5&sort=dist&type=all&apikey=" +
-					apiKey;
-			this.model.log( strApiUrl );
-			final URL apiUrl = new URL( strApiUrl );
-			InputStream in = apiUrl.openStream( );
-			ByteArrayOutputStream out = new ByteArrayOutputStream( );
-			byte[ ] buffer = new byte[ 4096 ];
-			int n;
-			while ( ( n = in.read( buffer ) ) > 0 )
+			Double lat = user.getLocLatitude( );
+			Double lng = user.getLocLongitude( );
+			Double radius = user.getRadius( );
+			//			String sorte = user.getSorte( );
+			try
 			{
-				out.write( buffer, 0, n );
+				String apiKey = ( String ) TankstellenFinder.APP_CONFIG_PROXY
+					.getConfigValue( TankstellenFinder.TANKKOENIG_API_KEY, r.getApplicationName( ), r.getSystem( ) );
+				String strApiUrl =
+					"https://creativecommons.tankerkoenig.de/json/list.php?lat=" + lat + "&lng=" + lng + "&rad=" +
+						radius + "&sort=dist&type=all&apikey=" +
+						apiKey;
+				this.model.log( strApiUrl );
+				final URL apiUrl = new URL( strApiUrl );
+				InputStream in = apiUrl.openStream( );
+				ByteArrayOutputStream out = new ByteArrayOutputStream( );
+				byte[ ] buffer = new byte[ 4096 ];
+				int n;
+				while ( ( n = in.read( buffer ) ) > 0 )
+				{
+					out.write( buffer, 0, n );
+				}
+				in.close( );
+				out.close( );
+				JSONObject jsonResponse = new JSONObject( out.toString( ) );
+				JSONArray jsonStations = jsonResponse.optJSONArray( "stations" );
+				for ( int i = 0; i < jsonStations.length( ); i++ )
+				{
+					JSONObject jsonStation = jsonStations.getJSONObject( i );
+					Tankstelle tankstelle = new Tankstelle( );
+					tankstelle.setName( jsonStation.optString( "name" ) );
+					tankstelle.setE5( jsonStation.optDouble( "e5" ) );
+					tankstelle.setE10( jsonStation.optDouble( "e10" ) );
+					tankstelle.setDiesel( jsonStation.optDouble( "diesel" ) );
+					tankstelle.setLocationLatitude( jsonStation.optDouble( "lat" ) );
+					tankstelle.setLocationLongitude( jsonStation.optDouble( "lng" ) );
+					tankstellen.add( tankstelle );
+				}
+				/* Erzeugung als non-transient */
+				//    	Tankstelle tankstelle = (Tankstelle) TankstellenFinder.AOM.createObject( r.getApplicationName( ), Tankstelle.MODULE_NAME, Tankstelle.MODEL_NAME, r );
 			}
-			in.close( );
-			out.close( );
-			JSONObject jsonResponse = new JSONObject( out.toString( ) );
-			JSONArray jsonStations = jsonResponse.optJSONArray( "stations" );
-			for ( int i = 0; i < jsonStations.length( ); i++ )
+			catch ( Exception e )
 			{
-				JSONObject jsonStation = jsonStations.getJSONObject( i );
-				Tankstelle tankstelle = new Tankstelle( );
-				tankstelle.setName( jsonStation.optString( "name" ) );
-				tankstelle.setE5( jsonStation.optDouble( "e5" ) );
-				tankstelle.setE10( jsonStation.optDouble( "e10" ) );
-				tankstelle.setDiesel( jsonStation.optDouble( "diesel" ) );
-				tankstelle.setLocationLatitude( jsonStation.optDouble( "lat" ) );
-				tankstelle.setLocationLongitude( jsonStation.optDouble( "lng" ) );
-				tankstellen.add( tankstelle );
+				this.model.throwException( e.getMessage( ) );
+				//			TankstellenFinder.AOM.throwException( r.getApplicationName( ), e.getMessage( ) );
 			}
-			/* Erzeugung als non-transient */
-			//    	Tankstelle tankstelle = (Tankstelle) TankstellenFinder.AOM.createObject( r.getApplicationName( ), Tankstelle.MODULE_NAME, Tankstelle.MODEL_NAME, r );
-		}
-		catch ( Exception e )
-		{
-			this.model.throwException( e.getMessage( ) );
-			//			TankstellenFinder.AOM.throwException( r.getApplicationName( ), e.getMessage( ) );
 		}
 		return tankstellen;
 	}
